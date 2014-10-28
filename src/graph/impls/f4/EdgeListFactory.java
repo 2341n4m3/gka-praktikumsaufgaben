@@ -20,7 +20,7 @@ import org.jgrapht.Graph;
  * @param <E> der Typ der Edges
  */
 //@formatter:off
-public class DirectedEdgeListFactory<G extends Graph<V, E>, V, E> implements IEdgeListFactory<
+public class EdgeListFactory<G extends Graph<V, E>, V, E> implements IEdgeListFactory<
 	G,
 	Map<V, Integer>,
 	V,
@@ -39,7 +39,7 @@ public class DirectedEdgeListFactory<G extends Graph<V, E>, V, E> implements IEd
 	? extends Boolean> checkSuccessorOrNeighbor;
 //@formatter:on
 
-	public DirectedEdgeListFactory(
+	public EdgeListFactory(
 			NeighborOrSuccessorChecker<? super G, ? super V, ? super V, ? extends Boolean> checkSuccessorOrNeighbor) {
 		this.checkSuccessorOrNeighbor = checkSuccessorOrNeighbor;
 	}

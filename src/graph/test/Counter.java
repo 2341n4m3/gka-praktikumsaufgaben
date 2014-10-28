@@ -6,7 +6,7 @@ import org.jgrapht.event.TraversalListener;
 import org.jgrapht.event.VertexTraversalEvent;
 
 
-public class PerfCount<V,E> implements TraversalListener<V, E>{
+public class Counter<V,E> implements TraversalListener<V, E>{
 
 	public int connectedComponentFinished;
 	public int connectedComponentStarted;

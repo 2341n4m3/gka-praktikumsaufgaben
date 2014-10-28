@@ -34,6 +34,11 @@ public class DirectedWeightedGraphBuilder
 				addedEdge = graph.addEdge(source, target);
 				graph.setEdgeWeight(addedEdge, Double.parseDouble(vertices[2]));
 				return true;
+			 } else if (vertices.length == 1){
+				    Vertex source = makeVertexFrom(vertices[0]);
+				    graph.addVertex(source);
+				    return true;
+				   
 			} else {
 				return false;
 			}

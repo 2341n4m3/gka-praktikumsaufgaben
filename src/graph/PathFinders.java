@@ -6,7 +6,7 @@ import graph.impls.f2.UndirectedNeighbors;
 import graph.impls.f3.NeighborChecker;
 import graph.impls.f3.PathFinder;
 import graph.impls.f3.SuccessorChecker;
-import graph.impls.f4.DirectedEdgeListFactory;
+import graph.impls.f4.EdgeListFactory;
 import graph.impls.f4.GraphPathFactory;
 
 import org.jgrapht.DirectedGraph;
@@ -37,7 +37,7 @@ public class PathFinders {
 
 		SuccessorChecker<DirectedGraph<V, E>, V, E> successorCecker = new SuccessorChecker<>();
 
-		DirectedEdgeListFactory<DirectedGraph<V, E>, V, E> edgeListFactory = new DirectedEdgeListFactory<>(
+		EdgeListFactory<DirectedGraph<V, E>, V, E> edgeListFactory = new EdgeListFactory<>(
 				successorCecker);
 
 		GraphPathFactory<DirectedGraph<V, E>, V, E> graphPathFactory = new GraphPathFactory<>(
@@ -63,7 +63,7 @@ public class PathFinders {
 
 		NeighborChecker<UndirectedGraph<V, E>, V, E> neighborChecker = new NeighborChecker<>();
 
-		DirectedEdgeListFactory<UndirectedGraph<V, E>, V, E> edgeListFactory = new DirectedEdgeListFactory<>(
+		EdgeListFactory<UndirectedGraph<V, E>, V, E> edgeListFactory = new EdgeListFactory<>(
 				neighborChecker);
 
 		GraphPathFactory<UndirectedGraph<V, E>, V, E> graphPathFactory = new GraphPathFactory<>(
@@ -76,46 +76,6 @@ public class PathFinders {
 		return new PathFinder<>(listener, graphPathFactory,
 				iteratorFactory, neighbors);
 	}
-	
-	
-	public static <V, E> PathFinder<DefaultDirectedWeightedGraph<V, E>, V, E> newDirectedWeightedBreadthPathFinder(
-			TraversalListener<V, E> listener) {
-
-		SuccessorChecker<DefaultDirectedWeightedGraph<V, E>, V, E> successorCecker = new SuccessorChecker<>();
-
-		DirectedEdgeListFactory<DefaultDirectedWeightedGraph<V, E>, V, E> edgeListFactory = new DirectedEdgeListFactory<>(
-				successorCecker);
-
-		GraphPathFactory<DefaultDirectedWeightedGraph<V, E>, V, E> graphPathFactory = new GraphPathFactory<>(
-				edgeListFactory);
-
-		BreadthFirstIteratorFactory<DefaultDirectedWeightedGraph<V, E>, V, E> iteratorFactory = new BreadthFirstIteratorFactory<>();
-
-		DirectedNeighbors<DefaultDirectedWeightedGraph<V, E>, V, E> neighbors = new DirectedNeighbors<>();
-
-		return new PathFinder<>(listener, graphPathFactory,
-				iteratorFactory, neighbors);
-	}
-
-	public static <V,E>PathFinder<WeightedPseudograph<V, E>, V, E> newUndirectedWeightedBreadthPathFinder(
-			TraversalListener<V, E> listener) {
-
-		NeighborChecker<WeightedPseudograph<V, E>, V, E> successorCecker = new NeighborChecker<>();
-
-		DirectedEdgeListFactory<WeightedPseudograph<V, E>, V, E> edgeListFactory = new DirectedEdgeListFactory<>(
-				successorCecker);
-
-		GraphPathFactory<WeightedPseudograph<V, E>, V, E> graphPathFactory = new GraphPathFactory<>(
-				edgeListFactory);
-
-		BreadthFirstIteratorFactory<WeightedPseudograph<V, E>, V, E> iteratorFactory = new BreadthFirstIteratorFactory<>();
-
-		UndirectedNeighbors<WeightedPseudograph<V, E>, V, E> neighbors = new UndirectedNeighbors<>();
-
-		return new PathFinder<>(listener, graphPathFactory,
-				iteratorFactory, neighbors);
-	}
-
 
 
 

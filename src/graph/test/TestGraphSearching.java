@@ -1,28 +1,21 @@
 package graph.test;
 
 import static graph.GkaGraphReaders.newDirectedReader;
-import static graph.GkaGraphReaders.newDirectedWeightedReader;
 import static graph.GkaGraphReaders.newUndirectedReader;
-import static graph.GkaGraphReaders.newUndirectedWeightedReader;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import graph.PathFinders;
 import graph.Vertex;
 import graph.impls.f3.PathFinder;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.UndirectedGraph;
-import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.WeightedPseudograph;
 import org.junit.Test;
 
 
@@ -31,16 +24,12 @@ public class TestGraphSearching {
 
 	DirectedGraph<Vertex, DefaultEdge> directed;
 	UndirectedGraph<Vertex, DefaultEdge> undirected;
-	DefaultDirectedWeightedGraph<Vertex, DefaultWeightedEdge> directedWeighted;
-	WeightedPseudograph<Vertex, DefaultWeightedEdge> undirectedWeighted;
 
 
 	{
 		try {
-			directed = newDirectedReader().read("D:/Studium/Semester 5/workspace/GKA_Praktikum_1/src/graph/misc/graph1.gka");
-			undirected =newUndirectedReader().read("D:/Studium/Semester 5/workspace/GKA_Praktikum_1/src/graph/misc/graph2.gka");		
-			directedWeighted = newDirectedWeightedReader().read("D:/Studium/Semester 5/workspace/GKA_Praktikum_1/src/graph/misc/owngraph1.gka");
-			undirectedWeighted = newUndirectedWeightedReader().read("D:/Studium/Semester 5/workspace/GKA_Praktikum_1/src/graph/misc/graph3.gka");
+			directed = newDirectedReader().read("/home/h34d/workspace/GKA_Praktikum_1/src/graph/misc/graph1.gka");
+			undirected =newUndirectedReader().read("/home/h34d/workspace/GKA_Praktikum_1/src/graph/misc/graph2.gka");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -48,22 +37,15 @@ public class TestGraphSearching {
 	
 	@Test
 	public void testBreadth() {
-		PerfCount<Vertex,DefaultEdge> directedCounter = new PerfCount<Vertex, DefaultEdge>();
+		// Zählt mit wie oft wir über knoten und Kanten gegangen sind
+		Counter<Vertex,DefaultEdge> directedCounter = new Counter<Vertex, DefaultEdge>();
 
 		PathFinder<DirectedGraph<Vertex, DefaultEdge>, Vertex, DefaultEdge> directedFinder =
 				PathFinders.newDirectedBreadthPathFinder(directedCounter);
-		PerfCount<Vertex,DefaultEdge> undirectedCounter = new PerfCount<Vertex, DefaultEdge>();
+		Counter<Vertex,DefaultEdge> undirectedCounter = new Counter<Vertex, DefaultEdge>();
 		
 		PathFinder<UndirectedGraph<Vertex, DefaultEdge>, Vertex, DefaultEdge> undirectedFinder =
 				PathFinders.newUndirectedBreadthPathFinder(undirectedCounter);
-		
-		PerfCount<Vertex,DefaultWeightedEdge> directedWeightedCounter = new PerfCount<Vertex, DefaultWeightedEdge>();
-		PathFinder<DefaultDirectedWeightedGraph<Vertex, DefaultWeightedEdge>, Vertex, DefaultWeightedEdge> directedWeightedFinder =
-				PathFinders.newDirectedWeightedBreadthPathFinder(directedWeightedCounter);
-		
-		PerfCount<Vertex,DefaultWeightedEdge> undirectedWeightedCounter = new PerfCount<Vertex, DefaultWeightedEdge>();
-		PathFinder<WeightedPseudograph<Vertex, DefaultWeightedEdge>, Vertex, DefaultWeightedEdge> undirectedWeightedFinder =
-				PathFinders.newUndirectedWeightedBreadthPathFinder(undirectedWeightedCounter);
 
 		GraphPath<Vertex, DefaultEdge> directedPath =
 				directedFinder.apply(directed, new Vertex("a"), new Vertex("g"));
@@ -78,41 +60,22 @@ public class TestGraphSearching {
 		System.out.println(undirectedCounter);
 		System.out.println(undirectedPath);
 		System.out.println(undirectedPath.getEdgeList().size());
-		
-		GraphPath<Vertex, DefaultWeightedEdge> directedWeightedPath =
-				directedWeightedFinder.apply(directedWeighted, new Vertex("Bremen"), new Vertex("Rotenburg"));
-		System.out.println("breadth undirect");
-		System.out.println(directedWeightedCounter);
-		System.out.println(directedWeightedPath);
-		System.out.println(directedWeightedPath.getEdgeList().size());
-		
-		GraphPath<Vertex, DefaultWeightedEdge> undirectedWeightedPath =
-				undirectedWeightedFinder.apply(undirectedWeighted, new Vertex("Bremen"), new Vertex("Rotenburg"));
-		System.out.println("breadth undirect");
-		System.out.println(undirectedWeightedCounter);
-		System.out.println(undirectedWeightedPath);
-		System.out.println(undirectedWeightedPath.getEdgeList().size());
-		
 
-		checkPaths(directedPath, undirectedPath, directedWeightedPath, undirectedWeightedPath);
+		checkPaths(directedPath, undirectedPath);
 	}
 
 
 	private void checkPaths(GraphPath<Vertex, DefaultEdge> directedPath,
-			GraphPath<Vertex, DefaultEdge> undirectedPath, GraphPath<Vertex, DefaultWeightedEdge> directedWeightedPath, GraphPath<Vertex, DefaultWeightedEdge> undirectedWeightedPath) {
+			GraphPath<Vertex, DefaultEdge> undirectedPath) {
 		List<String> directedVertexList = new ArrayList<String>();
 		Collections.addAll(directedVertexList, "a", "k", "g");
 		List<String> undirectedVertexList = new ArrayList<String>();
 		Collections.addAll(undirectedVertexList, "a", "b", "h");
-		List<String> directedWeightedVertexList = new ArrayList<String>();
-		Collections.addAll(directedWeightedVertexList, "Bremen", "Bremerhaven", "Rotenburg");
-		List<String> undirectedWeightedVertexList = new ArrayList<String>();
-		Collections.addAll(undirectedWeightedVertexList, "Bremen", "Bremerhaven", "Rotenburg");
+
 
 		check(directedPath, directedVertexList);
 		check(undirectedPath, undirectedVertexList);
-		check(directedWeightedPath, directedWeightedVertexList);
-		check(undirectedWeightedPath, undirectedWeightedVertexList);
+
 	}
 
 	private <E> void check(GraphPath<Vertex, E> path,
