@@ -9,6 +9,9 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedPseudograph;
 
+/**
+ * Liest aus .gka Dateien Zeile fuer Zeile den ungerichteten gewichteten Graphen aus.
+ */
 public class UndirectedWeightedGraphBuilder
 		extends
 		AbstractBaseGraphBuilder<WeightedPseudograph<Vertex, DefaultWeightedEdge>, Vertex, DefaultEdge>
@@ -20,10 +23,13 @@ public class UndirectedWeightedGraphBuilder
 
 		@Override
 		public boolean readLine(String line) {
+			//loescht die unrelevanten Zeichen aus der Textzeile
 			line = line.replace(" ", "");
 			line = line.replace(";","");
+			//erstellt aus den wichtigen Teilen einen String Array
 			String[] vertices = line.split("--|:");
 			DefaultWeightedEdge addedEdge = null;
+			//je nach Elementanzahl werden die bestimmten Elemente verschieden interpretiert und ein Graph erzeugt
 			if (vertices.length == 3) {
 				Vertex source = makeVertexFrom(vertices[0]);
 				Vertex target = makeVertexFrom(vertices[1]);

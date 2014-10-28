@@ -12,23 +12,20 @@ import graph.impls.f4.GraphPathFactory;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.event.TraversalListener;
-import org.jgrapht.graph.DefaultDirectedWeightedGraph;
-import org.jgrapht.graph.WeightedPseudograph;
 
+/**
+ * @author krystian
+ * Enthaelt zwei statische Methoden um fuer gerichtete sowie ungerichtete Graphen mithilfe 
+ * des BFS Algorithmus den kuerzesten Pfad von einem Knoten s zu einem Knoten t zu finden.
+ */
 public class PathFinders {
 
 	private PathFinders() {
 	}
 
 	/**
-	 * Gives a shortes Path with Breadth First Search
 	 * 
-	 * im speziellen baut diese Methode einen Pathfinder zusammen der erst in
-	 * die Breite iteriert, die Iteration abbricht wenn dem Endknoten eine Länge
-	 * zugewiesen wurde. Ausserdem interpretieren sowohl die EdgelistFactory als
-	 * auch der Pathfinder "Kinder" als Nachfolger eines Knoten da hier auf
-	 * Gerichteten Graphen gearbeitete wird
-	 * 
+	 * Baut PathFinder fuer gerichtete Graphen zusammen
 	 * @param listener
 	 * @return new GraphPath
 	 */
@@ -52,9 +49,8 @@ public class PathFinders {
 	}
 
 	/**
-	 * erstellt einen PathFinder der mit Breitensuche einen ungerichteten
-	 * Graphen nach einem Kürzesten Weg durchsucht
 	 * 
+	 * Baut PathFinder fuer ungerichtete Graphen zusammen
 	 * @param listener
 	 * @return
 	 */

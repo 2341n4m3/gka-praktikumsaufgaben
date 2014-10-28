@@ -28,8 +28,8 @@ public class TestGraphSearching {
 
 	{
 		try {
-			directed = newDirectedReader().read("/home/h34d/workspace/GKA_Praktikum_1/src/graph/misc/graph1.gka");
-			undirected =newUndirectedReader().read("/home/h34d/workspace/GKA_Praktikum_1/src/graph/misc/graph2.gka");
+			directed = newDirectedReader().read("C:/Users/krystian/git/GKA_Praktikum_1/src/graph/misc/graph1.gka");
+			undirected =newUndirectedReader().read("C:/Users/krystian/git/GKA_Praktikum_1/src/graph/misc/graph2.gka");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

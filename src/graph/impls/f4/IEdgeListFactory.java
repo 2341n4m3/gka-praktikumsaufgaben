@@ -1,7 +1,7 @@
 package graph.impls.f4;
 
 /**
- * Eine Funktion mit 3 Argumenten
+ * Interface fuer die GraphPathFactory Klasse
 *
 * @param <A>
 * @param <B>

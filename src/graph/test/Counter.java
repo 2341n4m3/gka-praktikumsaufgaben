@@ -6,6 +6,13 @@ import org.jgrapht.event.TraversalListener;
 import org.jgrapht.event.VertexTraversalEvent;
 
 
+/**
+ * Zaehlt beim Traversieren ueber einen Graphen mittels Iterator 
+ * unter anderem wie haeufig ein Knoten oder eine Kante durchlaufen wurde
+ *
+ * @param <V>
+ * @param <E>
+ */
 public class Counter<V,E> implements TraversalListener<V, E>{
 
 	public int connectedComponentFinished;

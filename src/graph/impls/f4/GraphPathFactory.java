@@ -25,16 +25,16 @@ public class GraphPathFactory<G extends Graph<V, E>, V, E> implements
 	/**
 	 * edgeListFactory ist eine Funktion die aus einem Graph, einer Map(Vertex->Weglängen)
 	 * und 2 Vertexen(Start-/ZielVertex) den kürzesten Weg als Liste von Edges findet
-	 * Die Liste ist in umgedrehter Reihenfolge (Ziel zuerst)
+	 * Die Liste ist in umgedrehter Reihenfolge (Ziel zuerst) vorhanden
 	 */
-	//@formatter:off
+
 	private final IEdgeListFactory<
 		? super G,
 		? super Map<V, Integer>,
 		? super V,
 		? super V,
 		? extends List<E>> edgeListFactory;
-	//@formatter:on
+
 
 	public GraphPathFactory(
 			IEdgeListFactory<? super G, ? super Map<V, Integer>, ? super V, ? super V, ? extends List<E>> edgeListFactory) {

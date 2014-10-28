@@ -3,27 +3,22 @@ package graph.util;
 import org.jgrapht.Graph;
 
 /**
- * A capability to read a graphrepresentation line by line.
+ * Ermoeglicht das Erzeugen eines Graphen aus einer .gka Datei Zeile fuer Zeile.
  * 
- * @author vab
- * 
- * @param <G>
- *            the Type of Graph to be built
+ * @param <G> zu erzeugender Graphentyp
  */
 public interface GkaGraphBuilder<G extends Graph<?, ?>> {
 
 	/**
-	 * reads the next line possibly changing the content of the Graph returned
-	 * by getGraph()
+	 * Liest die Zeile der Stringrepräsentation des Graphen und fuegt gegebenenfalls Knoten/Kanten hinzu
 	 * 
-	 * @param line
-	 *            the line to be "parsed"
-	 * @return false if the ErrorState needs to be checked
+	 * @param line die zu parsende Zeile
+	 * @return false wenn die Zeile nicht interpretiert werden kann sonst true
 	 */
 	boolean readLine(String line);
 
 	/**
-	 * get the Graph created by this Builder
+	 * Gibt den durch den Builder erzeugten Graphen zurueck
 	 * @return the Graph
 	 */
 	G getGraph();

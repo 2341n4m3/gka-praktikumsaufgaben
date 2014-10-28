@@ -12,9 +12,9 @@ import java.io.InputStreamReader;
 import org.jgrapht.Graph;
 
 /**
- * Read a Graph from a String.
+ * Liest aus einem String einen Graphen aus.
  *
- * @param <G> the Type of Graph this is reading
+ * @param <G> der Typ des zu lesenden Graphen
  */
 public class GkaGraphFileReader<G extends Graph<?, ?>> implements
 		GkaGraphReader<G> {
@@ -27,14 +27,11 @@ public class GkaGraphFileReader<G extends Graph<?, ?>> implements
 
 	
 	/**
-	 * reads a Graph from the String.
-	 * <p>the String can be the actual Representation of the Graph
-	 * or a Path or URL
-	 * <p>if str is null read() will throw a NPE
-	 * <p>read() will return null (even if a Graph was partially read) on errors during reading
-	 * @param  str the source of the Graph
-	 * @return     the newly created Graph or null if something went wrong
-	 * @throws IOException because we dont want any more catch statements
+	 * Liest aus einem String einen Graphen aus
+	 * read() wirft null zurueck (auch wenn der Graph teilweise ausgelesen wurde) sobald ein Fehler auftritt
+	 * @param  str Repräsentation des Graphen
+	 * @return der neu erzeugte Graph oder null wenn was schief gegangen ist
+	 * @throws IOException 
 	 */
 	@Override
 	public G read(String path) throws IOException {
@@ -44,11 +41,8 @@ public class GkaGraphFileReader<G extends Graph<?, ?>> implements
 			String currentline = br.readLine();
 			while (currentline != null) {
 				if (!currentline.equals("")){
-				//	currentline=currentline.replaceAll(" ", "");
 					boolean lineWasOk = builder.readLine(currentline);
 					if (!lineWasOk) {
-//						System.err.println("Error in File reading: "
-//								+ builder.getErrorMessage());
 						return null;
 					} else {
 						currentline = br.readLine();

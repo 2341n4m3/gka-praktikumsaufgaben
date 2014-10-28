@@ -16,7 +16,7 @@ import org.jgrapht.graph.WeightedPseudograph;
 
 
 /**
- * creates a new Graph
+ * Enthaelt statische Methoden zum Erzuegen der unterschiedlichen Graphentypen.
  */
 public class GkaGraphReaders {
 	private GkaGraphReaders() {
@@ -24,7 +24,7 @@ public class GkaGraphReaders {
 
 	/**
 	 * 
-	 * @return create a new DirectedGraph without "attributiert" and "gewichtet"
+	 * @return Erzeugt einen gerichteten ungewichteten Graphen
 	 */
 	public static GkaGraphFileReader<DirectedGraph<Vertex, DefaultEdge>> newDirectedReader() {
 		return new GkaGraphFileReader<DirectedGraph<Vertex, DefaultEdge>>(
@@ -34,7 +34,7 @@ public class GkaGraphReaders {
 	
 	/**
 	 * 
-	 * @return create a new DirectedWeightedMultigraph with "gewichtet" and  without "attributiert"
+	 * @return Erzeugt einen gerichteten gewichteten Graphen
 	 */
 	public static GkaGraphFileReader<DefaultDirectedWeightedGraph<Vertex, DefaultWeightedEdge>> newDirectedWeightedReader() {
 		return new GkaGraphFileReader<DefaultDirectedWeightedGraph<Vertex, DefaultWeightedEdge>>(
@@ -43,7 +43,7 @@ public class GkaGraphReaders {
 
 	/**
 	 * 
-	 * @return create a new UndirectedGraph without "attributiert" and "gewichtet"
+	 * @return Erzeugt einen ungerichteten ungewichteten Graphen
 	 */
 	public static GkaGraphFileReader<UndirectedGraph<Vertex, DefaultEdge>> newUndirectedReader() {
 		return new GkaGraphFileReader<UndirectedGraph<Vertex, DefaultEdge>>(
@@ -52,7 +52,7 @@ public class GkaGraphReaders {
 	
 	/**
 	 * 
-	 * @return create a new WeightedPseudograph with "gewichtet" and without "attributiert"
+	 * @return Erzeugt einen ungerichteten gewichteten Graphen
 	 */
 	public static GkaGraphFileReader<WeightedPseudograph<Vertex, DefaultWeightedEdge>> newUndirectedWeightedReader() {
 		return new GkaGraphFileReader<WeightedPseudograph<Vertex, DefaultWeightedEdge>>(

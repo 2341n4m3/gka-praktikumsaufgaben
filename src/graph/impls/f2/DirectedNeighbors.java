@@ -9,6 +9,14 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.Graphs;
 
 
+/**
+ * Enthaelt nur eine Funtkion apply() die zu einem bestimmten 
+ * Knoten aus einem Graphen eine Menge all seiner Nachfolgerknoten zurueckgibt.
+ *
+ * @param <G>
+ * @param <V>
+ * @param <E>
+ */
 public class DirectedNeighbors<G extends DirectedGraph<V,E>, V, E> implements INeighbors<G, V, Set<V>> {
 
 	@Override
