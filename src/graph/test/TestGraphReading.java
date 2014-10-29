@@ -22,7 +22,7 @@ public class TestGraphReading {
 		GkaGraphReader<DirectedGraph<Vertex, DefaultEdge>> reader =
 				newDirectedReader();
 		DirectedGraph<Vertex, DefaultEdge> graph =
-				reader.read("C:/Users/krystian/git/GKA_Praktikum_1/src/graph/misc/graph1.gka");
+				reader.read("src/graph/misc/graph1.gka");
 		check(graph);
 	}
 

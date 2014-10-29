@@ -6,12 +6,12 @@ graph G {
   Norderstedt [ label="Norderstedt" ];
   Husum [ label="Husum" ];
   Kiel [ label="Kiel" ];
-  Lueneburg [ label="Lüneburg" ];
-  Luebeck [ label="Lübeck" ];
+  Lueneburg [ label="Lueneburg" ];
+  Luebeck [ label="Luebeck" ];
   Soltau [ label="Soltau" ];
   Hameln [ label="Hameln" ];
   Detmold [ label="Detmold" ];
-  Muenster [ label="Münster" ];
+  Muenster [ label="Muenster" ];
   Minden [ label="Minden" ];
   Hannover [ label="Hannover" ];
   Oldenburg [ label="Oldenburg" ];

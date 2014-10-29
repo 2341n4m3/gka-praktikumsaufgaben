@@ -25,7 +25,5 @@ digraph G {
   6 -> 7 [ label="" ];
   7 -> 9 [ label="" ];
   9 -> 6 [ label="" ];
-  10 -> 10 [ label="" ];
-  12 -> 12 [ label="" ];
   11 -> 12 [ label="" ];
 }

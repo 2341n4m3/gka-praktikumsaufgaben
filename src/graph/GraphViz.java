@@ -81,6 +81,8 @@ public class GraphViz {
 				GkaGraphReaders.newDirectedReader().read("src/graph/misc/graph1.gka"));
 		vizIt("src/graph/misc/graph2",
 				GkaGraphReaders.newUndirectedReader().read("src/graph/misc/graph2.gka"));
+		vizIt("src/graph/misc/graph2.1",
+				GkaGraphReaders.newUndirectedReader().read("src/graph/misc/graph2.1.gka"));
 		vizIt("src/graph/misc/graph3",
 				GkaGraphReaders.newUndirectedWeightedReader().read("src/graph/misc/graph3.gka"));
 		vizIt("src/graph/misc/graph4",

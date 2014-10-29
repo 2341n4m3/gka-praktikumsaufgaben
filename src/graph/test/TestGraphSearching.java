@@ -24,28 +24,38 @@ public class TestGraphSearching {
 
 	DirectedGraph<Vertex, DefaultEdge> directed;
 	UndirectedGraph<Vertex, DefaultEdge> undirected;
+	UndirectedGraph<Vertex, DefaultEdge> undirected2;
 
 
 	{
 		try {
-			directed = newDirectedReader().read("C:/Users/krystian/git/GKA_Praktikum_1/src/graph/misc/graph1.gka");
-			undirected =newUndirectedReader().read("C:/Users/krystian/git/GKA_Praktikum_1/src/graph/misc/graph2.gka");
+			directed = newDirectedReader().read("src/graph/misc/graph1.gka");
+			undirected =newUndirectedReader().read("src/graph/misc/graph2.gka");
+			undirected2 =newUndirectedReader().read("src/graph/misc/graph2.1.gka");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	@Test
 	public void testBreadth() {
-		// Zählt mit wie oft wir über knoten und Kanten gegangen sind
 		Counter<Vertex,DefaultEdge> directedCounter = new Counter<Vertex, DefaultEdge>();
 
 		PathFinder<DirectedGraph<Vertex, DefaultEdge>, Vertex, DefaultEdge> directedFinder =
 				PathFinders.newDirectedBreadthPathFinder(directedCounter);
+		
 		Counter<Vertex,DefaultEdge> undirectedCounter = new Counter<Vertex, DefaultEdge>();
 		
 		PathFinder<UndirectedGraph<Vertex, DefaultEdge>, Vertex, DefaultEdge> undirectedFinder =
 				PathFinders.newUndirectedBreadthPathFinder(undirectedCounter);
+		
+		Counter<Vertex,DefaultEdge> undirectedCounter2 = new Counter<Vertex, DefaultEdge>();
+		
+		PathFinder<UndirectedGraph<Vertex, DefaultEdge>, Vertex, DefaultEdge> undirectedFinder2 =
+				PathFinders.newUndirectedBreadthPathFinder(undirectedCounter2);
 
 		GraphPath<Vertex, DefaultEdge> directedPath =
 				directedFinder.apply(directed, new Vertex("a"), new Vertex("g"));
@@ -60,21 +70,31 @@ public class TestGraphSearching {
 		System.out.println(undirectedCounter);
 		System.out.println(undirectedPath);
 		System.out.println(undirectedPath.getEdgeList().size());
+		
+		GraphPath<Vertex, DefaultEdge> undirectedPath2 =
+				undirectedFinder2.apply(undirected2, new Vertex("a"), new Vertex("o"));
+		System.out.println("breadth undirect");
+		System.out.println(undirectedCounter2);
+		System.out.println(undirectedPath2);
+		System.out.println(undirectedPath2.getEdgeList().size());
 
-		checkPaths(directedPath, undirectedPath);
+		checkPaths(directedPath, undirectedPath, undirectedPath2);
 	}
 
 
 	private void checkPaths(GraphPath<Vertex, DefaultEdge> directedPath,
-			GraphPath<Vertex, DefaultEdge> undirectedPath) {
+			GraphPath<Vertex, DefaultEdge> undirectedPath, GraphPath<Vertex, DefaultEdge> undirectedPath2) {
 		List<String> directedVertexList = new ArrayList<String>();
 		Collections.addAll(directedVertexList, "a", "k", "g");
 		List<String> undirectedVertexList = new ArrayList<String>();
 		Collections.addAll(undirectedVertexList, "a", "b", "h");
+		List<String> undirectedVertexList2 = new ArrayList<String>();
+		Collections.addAll(undirectedVertexList2, "a", "j", "e","f","o");
 
 
 		check(directedPath, directedVertexList);
 		check(undirectedPath, undirectedVertexList);
+		check(undirectedPath2, undirectedVertexList2);
 
 	}
 
