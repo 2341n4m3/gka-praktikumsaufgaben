@@ -5,15 +5,14 @@ import org.jgrapht.event.EdgeTraversalEvent;
 import org.jgrapht.event.TraversalListener;
 import org.jgrapht.event.VertexTraversalEvent;
 
-
 /**
- * Zaehlt beim Traversieren ueber einen Graphen mittels Iterator 
- * unter anderem wie haeufig ein Knoten oder eine Kante durchlaufen wurde
+ * Zaehlt beim Traversieren ueber einen Graphen mittels Iterator unter anderem
+ * wie haeufig ein Knoten oder eine Kante durchlaufen wurde
  *
  * @param <V>
  * @param <E>
  */
-public class Counter<V,E> implements TraversalListener<V, E>{
+public class Counter<V, E> implements TraversalListener<V, E> {
 
 	public int connectedComponentFinished;
 	public int connectedComponentStarted;
@@ -48,12 +47,11 @@ public class Counter<V,E> implements TraversalListener<V, E>{
 
 	@Override
 	public String toString() {
-		return "PerfCount [edgeTraversed="
-				+ edgeTraversed + ", vertexTraversed=" + vertexTraversed
-				+  "]";
+		return "Count [edgeTraversed=" + edgeTraversed
+				+ ", vertexTraversed=" + vertexTraversed + "]";
 	}
-	
-	public void clear(){
+
+	public void clear() {
 		connectedComponentFinished = 0;
 		connectedComponentStarted = 0;
 		edgeTraversed = 0;

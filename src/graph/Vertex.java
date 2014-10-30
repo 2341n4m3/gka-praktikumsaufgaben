@@ -1,20 +1,16 @@
 package graph;
 
-
 /**
  * Objektklasse fuer Vertex mit Namen
  */
 
-public class Vertex
-{
-	 private String name;
+public class Vertex {
+	private String name;
 
-
- 	public Vertex(String name){
+	public Vertex(String name) {
 		this.name = name;
 	}
-     
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -22,6 +18,7 @@ public class Vertex
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -38,7 +35,7 @@ public class Vertex
 			return false;
 		return true;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -47,9 +44,7 @@ public class Vertex
 		this.name = name;
 	}
 
-
-    public String toString()
-    {
-        return name;
-    }
+	public String toString() {
+		return name;
+	}
 }

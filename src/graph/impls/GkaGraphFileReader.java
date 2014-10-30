@@ -1,6 +1,5 @@
 package graph.impls;
 
-
 import graph.util.GkaGraphBuilder;
 import graph.util.GkaGraphReader;
 
@@ -14,7 +13,8 @@ import org.jgrapht.Graph;
 /**
  * Liest aus einem String einen Graphen aus.
  *
- * @param <G> der Typ des zu lesenden Graphen
+ * @param <G>
+ *            der Typ des zu lesenden Graphen
  */
 public class GkaGraphFileReader<G extends Graph<?, ?>> implements
 		GkaGraphReader<G> {
@@ -25,29 +25,31 @@ public class GkaGraphFileReader<G extends Graph<?, ?>> implements
 		this.builder = builder;
 	}
 
-	
 	/**
-	 * Liest aus einem String einen Graphen aus
-	 * read() wirft null zurueck (auch wenn der Graph teilweise ausgelesen wurde) sobald ein Fehler auftritt
-	 * @param  str Repräsentation des Graphen
+	 * Liest aus einem String einen Graphen aus read() wirft null zurueck (auch
+	 * wenn der Graph teilweise ausgelesen wurde) sobald ein Fehler auftritt
+	 * 
+	 * @param str
+	 *            Repräsentation des Graphen
 	 * @return der neu erzeugte Graph oder null wenn was schief gegangen ist
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@Override
 	public G read(String path) throws IOException {
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(path),"windows-1256"));
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(
+					path), "windows-1256"));
 			String currentline = br.readLine();
 			while (currentline != null) {
-				if (!currentline.equals("")){
+				if (!currentline.equals("")) {
 					boolean lineWasOk = builder.readLine(currentline);
 					if (!lineWasOk) {
 						return null;
 					} else {
 						currentline = br.readLine();
 					}
-				}else {
+				} else {
 					currentline = br.readLine();
 				}
 			}

@@ -1,6 +1,5 @@
 package graph.impls;
 
-
 import graph.Vertex;
 import graph.util.GkaGraphBuilder;
 
@@ -9,7 +8,8 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
 /**
- * Liest aus .gka Dateien Zeile fuer Zeile den gerichteten ungewichteten Graphen aus.
+ * Liest aus .gka Dateien Zeile fuer Zeile den gerichteten ungewichteten Graphen
+ * aus.
  */
 public class DirectedGraphBuilder
 		extends
@@ -17,38 +17,35 @@ public class DirectedGraphBuilder
 		implements GkaGraphBuilder<DirectedGraph<Vertex, DefaultEdge>> {
 
 	public DirectedGraphBuilder() {
-		graph =
-				new DefaultDirectedGraph<Vertex, DefaultEdge>(
-						DefaultEdge.class);
+		graph = new DefaultDirectedGraph<Vertex, DefaultEdge>(DefaultEdge.class);
 	}
 
+	@Override
+	public boolean readLine(String line) {
+		// loescht die unrelevanten Zeichen aus der Textzeile
+		line = line.replace(" ", "");
+		line = line.replace(";", "");
+		// erstellt aus den wichtigen Teilen einen String Array
+		String[] vertices = line.split("->");
+		// je nach Elementanzahl werden die bestimmten Elemente verschieden
+		// interpretiert und ein Graph erzeugt
+		if (vertices.length == 2) {
+			Vertex source = makeVertexFrom(vertices[0]);
+			Vertex target = makeVertexFrom(vertices[1]);
+			graph.addVertex(source);
+			graph.addVertex(target);
+			graph.addEdge(source, target);
+			return true;
+		} else if (vertices.length == 1) {
+			Vertex source = makeVertexFrom(vertices[0]);
+			graph.addVertex(source);
+			return true;
 
-		@Override
-		public boolean readLine(String line) {
-			//loescht die unrelevanten Zeichen aus der Textzeile
-			line = line.replace(" ", "");
-			line = line.replace(";","");
-			//erstellt aus den wichtigen Teilen einen String Array
-			String[] vertices = line.split("->");
-			//je nach Elementanzahl werden die bestimmten Elemente verschieden interpretiert und ein Graph erzeugt
-			if (vertices.length == 2) {
-				Vertex source = makeVertexFrom(vertices[0]);
-				Vertex target = makeVertexFrom(vertices[1]);
-				graph.addVertex(source);
-				graph.addVertex(target);
-				graph.addEdge(source, target);
-				return true;
-			 } else if (vertices.length == 1){
-				    Vertex source = makeVertexFrom(vertices[0]);
-				    graph.addVertex(source);
-				    return true;
-				   
-			} else {	
-				return false;
+		} else {
+			return false;
 		}
 
 	};
-
 
 	@Override
 	protected Vertex makeVertexFrom(String str) {

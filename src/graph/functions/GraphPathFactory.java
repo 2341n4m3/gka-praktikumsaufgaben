@@ -1,6 +1,4 @@
-package graph.impls.f4;
-
-
+package graph.functions;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,30 +9,29 @@ import org.jgrapht.GraphPath;
 import org.jgrapht.graph.GraphPathImpl;
 
 /**
- * GraphPathFactory ist eine Funktion die aus einem Graph einer Map und 2 Vertexen 
- * einen GraphPath erstellt
- * @author 
+ * GraphPathFactory ist eine Funktion die aus einem Graph einer Map und 2
+ * Vertexen einen GraphPath erstellt
+ * 
+ * @author
  *
- * @param <G> der Typ des Graph
- * @param <V> der Typ der Vertexe
- * @param <E> der Typ der Edges
+ * @param <G>
+ *            der Typ des Graph
+ * @param <V>
+ *            der Typ der Vertexe
+ * @param <E>
+ *            der Typ der Edges
  */
 public class GraphPathFactory<G extends Graph<V, E>, V, E> implements
 		IEdgeListFactory<G, Map<V, Integer>, V, V, GraphPath<V, E>> {
 
 	/**
-	 * edgeListFactory ist eine Funktion die aus einem Graph, einer Map(Vertex->Weglängen)
-	 * und 2 Vertexen(Start-/ZielVertex) den kürzesten Weg als Liste von Edges findet
-	 * Die Liste ist in umgedrehter Reihenfolge (Ziel zuerst) vorhanden
+	 * edgeListFactory ist eine Funktion die aus einem Graph, einer
+	 * Map(Vertex->Weglängen) und 2 Vertexen(Start-/ZielVertex) den kürzesten
+	 * Weg als Liste von Edges findet Die Liste ist in umgedrehter Reihenfolge
+	 * (Ziel zuerst) vorhanden
 	 */
 
-	private final IEdgeListFactory<
-		? super G,
-		? super Map<V, Integer>,
-		? super V,
-		? super V,
-		? extends List<E>> edgeListFactory;
-
+	private final IEdgeListFactory<? super G, ? super Map<V, Integer>, ? super V, ? super V, ? extends List<E>> edgeListFactory;
 
 	public GraphPathFactory(
 			IEdgeListFactory<? super G, ? super Map<V, Integer>, ? super V, ? super V, ? extends List<E>> edgeListFactory) {

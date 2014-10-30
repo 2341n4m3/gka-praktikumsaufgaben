@@ -1,4 +1,4 @@
-package graph.impls.f2;
+package graph.functions;
 
 /**
  * Interface fuer alle Graphiteratoren.

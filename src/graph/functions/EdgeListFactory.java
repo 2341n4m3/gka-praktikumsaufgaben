@@ -1,6 +1,4 @@
-package graph.impls.f4;
-
-import graph.impls.f3.NeighborOrSuccessorChecker;
+package graph.functions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +40,12 @@ public class EdgeListFactory<G extends Graph<V, E>, V, E> implements
 	 * Startvertex zum Zielvertex zu kommen.
 	 * 
 	 * @param graph
-	 * @param lengths Nummerierung der Knoten
-	 * @param start Startvertex
-	 * @param end Zielvertex
+	 * @param lengths
+	 *            Nummerierung der Knoten
+	 * @param start
+	 *            Startvertex
+	 * @param end
+	 *            Zielvertex
 	 * @return eine Liste die den kuerzesten Weg repraesentiert.
 	 */
 	private List<E> findReverseEdgeList(G graph, Map<V, Integer> lengths,

@@ -1,14 +1,12 @@
-package graph.impls.f2;
-
-
+package graph.functions;
 
 import org.jgrapht.Graph;
 import org.jgrapht.traverse.BreadthFirstIterator;
 import org.jgrapht.traverse.GraphIterator;
 
 /**
- * Enthaelt nur eine Funktion apply() die zu einem Graphen
- * einen BFS Iterator zurueckgibt.
+ * Enthaelt nur eine Funktion apply() die zu einem Graphen einen BFS Iterator
+ * zurueckgibt.
  *
  * @param <G>
  * @param <V>

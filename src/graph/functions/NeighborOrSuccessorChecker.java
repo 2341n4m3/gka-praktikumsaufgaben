@@ -1,5 +1,4 @@
-package graph.impls.f3;
-
+package graph.functions;
 
 /**
  * Interface fuer die SuccessorChecker und NeighborChecker Klassen.

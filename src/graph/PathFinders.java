@@ -1,22 +1,23 @@
 package graph;
 
-import graph.impls.f2.BreadthFirstIteratorFactory;
-import graph.impls.f2.DirectedNeighbors;
-import graph.impls.f2.UndirectedNeighbors;
-import graph.impls.f3.NeighborChecker;
-import graph.impls.f3.PathFinder;
-import graph.impls.f3.SuccessorChecker;
-import graph.impls.f4.EdgeListFactory;
-import graph.impls.f4.GraphPathFactory;
+import graph.functions.BreadthFirstIteratorFactory;
+import graph.functions.DirectedNeighbors;
+import graph.functions.EdgeListFactory;
+import graph.functions.GraphPathFactory;
+import graph.functions.NeighborChecker;
+import graph.functions.PathFinder;
+import graph.functions.SuccessorChecker;
+import graph.functions.UndirectedNeighbors;
 
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.event.TraversalListener;
 
 /**
- * @author krystian
- * Enthaelt zwei statische Methoden um fuer gerichtete sowie ungerichtete Graphen mithilfe 
- * des BFS Algorithmus den kuerzesten Pfad von einem Knoten s zu einem Knoten t zu finden.
+ * 
+ * Enthaelt zwei statische Methoden um fuer gerichtete sowie ungerichtete
+ * Graphen mithilfe des BFS Algorithmus den kuerzesten Pfad von einem Knoten s
+ * zu einem Knoten t zu finden.
  */
 public class PathFinders {
 
@@ -26,6 +27,7 @@ public class PathFinders {
 	/**
 	 * 
 	 * Baut PathFinder fuer gerichtete Graphen zusammen
+	 * 
 	 * @param listener
 	 * @return new GraphPath
 	 */
@@ -44,13 +46,14 @@ public class PathFinders {
 
 		DirectedNeighbors<DirectedGraph<V, E>, V, E> neighbors = new DirectedNeighbors<>();
 
-		return new PathFinder<>(listener, graphPathFactory,
-				iteratorFactory, neighbors);
+		return new PathFinder<>(listener, graphPathFactory, iteratorFactory,
+				neighbors);
 	}
 
 	/**
 	 * 
 	 * Baut PathFinder fuer ungerichtete Graphen zusammen
+	 * 
 	 * @param listener
 	 * @return
 	 */
@@ -69,10 +72,8 @@ public class PathFinders {
 
 		UndirectedNeighbors<UndirectedGraph<V, E>, V, E> neighbors = new UndirectedNeighbors<>();
 
-		return new PathFinder<>(listener, graphPathFactory,
-				iteratorFactory, neighbors);
+		return new PathFinder<>(listener, graphPathFactory, iteratorFactory,
+				neighbors);
 	}
-
-
 
 }
