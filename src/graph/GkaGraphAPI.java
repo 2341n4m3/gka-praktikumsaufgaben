@@ -1,5 +1,6 @@
 package graph;
 
+import graph.functions.DijkstraFinder;
 import graph.functions.PathFinder;
 import graph.test.Counter;
 
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.jgrapht.DirectedGraph;
+import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
@@ -21,6 +23,7 @@ import static graph.GraphViz.vizIt;
 import graph.GraphType;
 
 public class GkaGraphAPI {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) throws Exception {
 		while (true) {
 
@@ -31,6 +34,7 @@ public class GkaGraphAPI {
 			String zeile = null;
 			GraphType type = null;
 			String datei = null;
+			Graph graph = null;
 			try {
 				zeile = console.readLine();
 				BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -41,23 +45,25 @@ public class GkaGraphAPI {
 					if (currentline.contains(":")) {
 						type = GraphType.UNDIRECTEDWEIGHTEDGRAPH;
 						vizIt("src/graph/misc/" + zeile,
-								newUndirectedWeightedReader().read(
+								graph = newUndirectedWeightedReader().read(
 										"src/graph/misc/" + zeile + ".gka"));
 					} else {
 						type = GraphType.UNDIRECTEDGRAPH;
-						vizIt("src/graph/misc/" + zeile, newUndirectedReader()
-								.read("src/graph/misc/" + zeile + ".gka"));
+						vizIt("src/graph/misc/" + zeile,
+								graph = newUndirectedReader().read(
+										"src/graph/misc/" + zeile + ".gka"));
 					}
 				} else if (currentline.contains("->")) {
 					if (currentline.contains(":")) {
 						type = GraphType.DIRECTEDWEIGHTEDGRAPH;
 						vizIt("src/graph/misc/" + zeile,
-								newDirectedWeightedReader().read(
+								graph = newDirectedWeightedReader().read(
 										"src/graph/misc/" + zeile + ".gka"));
 					} else {
 						type = GraphType.DIRECTEDGRAPH;
-						vizIt("src/graph/misc/" + zeile, newDirectedReader()
-								.read("src/graph/misc/" + zeile + ".gka"));
+						vizIt("src/graph/misc/" + zeile,
+								graph = newDirectedReader().read(
+										"src/graph/misc/" + zeile + ".gka"));
 					}
 				} else {
 					br.close();
@@ -79,7 +85,7 @@ public class GkaGraphAPI {
 
 			if (zeile.equals("y")) {
 				System.out
-						.print("Welcher Algorithmus soll verwendet werden, was ist der Start und Targetknoten? BFS s t : ");
+						.print("Welcher Algorithmus soll verwendet werden, was ist der Start und Targetknoten? (BFS s t, Dijkstra s t) : ");
 				zeile = null;
 				try {
 					zeile = console.readLine();
@@ -148,6 +154,18 @@ public class GkaGraphAPI {
 					default:
 						throw new Exception("no GraphType recognised");
 					}
+				} else if (zeile.split(" ")[0].equals("Dijkstra")) {
+					Counter<Vertex, DefaultEdge> counter = new Counter<Vertex, DefaultEdge>();
+					DijkstraFinder<Graph<Vertex, DefaultEdge>, Vertex, DefaultEdge> undirectedFinder = PathFinders
+							.newDijkstraPathFinder(counter);
+
+					GraphPath<Vertex, DefaultEdge> undirectedPath = undirectedFinder
+							.apply((Graph) graph, new Vertex(
+									zeile.split(" ")[1]),
+									new Vertex(zeile.split(" ")[2]));
+					System.out.println(counter);
+					System.out.println(undirectedPath);
+					System.out.println(undirectedPath.getWeight());
 				}
 			}
 		}
