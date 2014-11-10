@@ -1,5 +1,6 @@
 package graph.impls;
 
+
 import graph.Vertex;
 import graph.util.GkaGraphBuilder;
 
@@ -26,10 +27,10 @@ public class UndirectedGraphBuilder
 		line = line.replace(" ", "");
 		line = line.replace(";", "");
 		// erstellt aus den wichtigen Teilen einen String Array
-		String[] vertices = line.split("--");
+		String[] vertices = line.split("--|:");
 		// je nach Elementanzahl werden die bestimmten Elemente verschieden
 		// interpretiert und ein Graph erzeugt
-		if (vertices.length == 2) {
+		if (vertices.length >= 2) {
 			Vertex source = makeVertexFrom(vertices[0]);
 			Vertex target = makeVertexFrom(vertices[1]);
 			graph.addVertex(source);
