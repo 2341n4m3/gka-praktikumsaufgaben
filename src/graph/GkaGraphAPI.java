@@ -1,6 +1,7 @@
 package graph;
 
 import graph.functions.DijkstraFinder;
+import graph.functions.FloydFinder;
 import graph.functions.PathFinder;
 import graph.test.Counter;
 
@@ -85,7 +86,7 @@ public class GkaGraphAPI {
 
 			if (zeile.equals("y")) {
 				System.out
-						.print("Welcher Algorithmus soll verwendet werden, was ist der Start und Targetknoten? (BFS s t, Dijkstra s t) : ");
+						.print("Welcher Algorithmus soll verwendet werden, was ist der Start und Targetknoten? (BFS s t, Dijkstra s t, Floyd s t) : ");
 				zeile = null;
 				try {
 					zeile = console.readLine();
@@ -156,17 +157,24 @@ public class GkaGraphAPI {
 					}
 				} else if (zeile.split(" ")[0].equals("Dijkstra")) {
 					Counter<Vertex, DefaultEdge> counter = new Counter<Vertex, DefaultEdge>();
-					DijkstraFinder<Graph<Vertex, DefaultEdge>, Vertex, DefaultEdge> undirectedFinder = PathFinders
-							.newDijkstraPathFinder(counter);
+					DijkstraFinder<Vertex, DefaultEdge> finder = new DijkstraFinder(graph,counter);
 
-					GraphPath<Vertex, DefaultEdge> undirectedPath = undirectedFinder
-							.apply((Graph) graph, new Vertex(
+					GraphPath<Vertex, DefaultEdge> path = finder.getShortestPath(new Vertex(
 									zeile.split(" ")[1]),
 									new Vertex(zeile.split(" ")[2]));
 					System.out.println(counter);
-					System.out.println(undirectedPath);
-					System.out.println(undirectedPath.getWeight());
+					System.out.println(path);
+					System.out.println(path.getWeight());
 				}
+			else if (zeile.split(" ")[0].equals("Floyd")){
+				Counter<Vertex, DefaultEdge> counter = new Counter<Vertex, DefaultEdge>();
+				FloydFinder<Vertex,DefaultEdge> finder = new FloydFinder(graph,counter);
+				GraphPath<Vertex, DefaultEdge> path = finder.getShortestPath(new Vertex(
+									zeile.split(" ")[1]), new Vertex(zeile.split(" ")[2]));
+			System.out.println(counter);
+			System.out.println(path);
+			System.out.println(path.getWeight());
+			}
 			}
 		}
 	}

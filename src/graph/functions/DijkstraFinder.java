@@ -23,15 +23,17 @@ import org.jgrapht.graph.GraphPathImpl;
  * @param <E>
  *            der Typ der Edges
  */
-public class DijkstraFinder<G extends Graph<V, E>, V, E> {
+public class DijkstraFinder<V, E> {
 
 	/**
 	 * listener ist ein TraversalListener der nach den Events horcht die von
 	 * einem GraphIterator emitiert werden
 	 */
 	private final TraversalListener<V, E> listener;
+    private Graph<V, E> graph;
 
-	public DijkstraFinder(TraversalListener<V, E> listener) {
+	public DijkstraFinder(Graph<V, E> graph,TraversalListener<V, E> listener) {
+		this.graph = graph;
 		this.listener = listener;
 	}
 
@@ -46,7 +48,7 @@ public class DijkstraFinder<G extends Graph<V, E>, V, E> {
 	 * 
 	 * @return ein Graphpath
 	 */
-	public GraphPath<V, E> apply(G graph, V start, V end) {
+	public GraphPath<V, E> getShortestPath(V start, V end) {
 
 		if (!(graph.containsVertex(start) && graph.containsVertex(end))) {
 			throw new IllegalArgumentException(
@@ -124,7 +126,7 @@ public class DijkstraFinder<G extends Graph<V, E>, V, E> {
 
 						// kante mit dem niedrigsten wert merken im jetzigen
 						// durchlauf
-						// falls die karte aber schon "besucht" war, dann nicht
+						// falls die kante aber schon "besucht" war, dann nicht
 						// mitzählen
 						if (targetDistance < smallDist
 								&& toProcess.contains(targetVertex)) {

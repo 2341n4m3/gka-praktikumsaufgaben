@@ -22,8 +22,7 @@ public class GraphCreator {
 		int countEdges;
 		int maxEdges;
 		boolean ok = true;
-		WeightedGraph<Vertex, DefaultEdge> graph = new SimpleWeightedGraph<Vertex, DefaultEdge>(
-				DefaultWeightedEdge.class);
+		WeightedGraph<Vertex, DefaultEdge> graph;
 
 		Scanner sc = new Scanner(System.in);
 		while (ok) {
@@ -51,7 +50,7 @@ public class GraphCreator {
 		
 		System.out.println("Welcher Graphentyp? (1=DWG,2=UWG,3=DG,4=UG)");
 		int typestr = sc.nextInt();
-		buildGraph(graph, countVertex, countEdges);
+		graph=buildGraph(countVertex, countEdges);
 		sc.close();
 		switch (typestr) {
 		case 1: GraphSave.GraphWriter(graph, GraphType.DIRECTEDWEIGHTEDGRAPH, datei);
@@ -72,9 +71,10 @@ public class GraphCreator {
 		}
 	}
 
-	private static WeightedGraph<Vertex, DefaultEdge> buildGraph(
-			WeightedGraph<Vertex, DefaultEdge> graph,
+	public static WeightedGraph<Vertex, DefaultEdge> buildGraph(
 			final int countVertex, int countEdges) {
+		WeightedGraph<Vertex, DefaultEdge> graph = new SimpleWeightedGraph<Vertex, DefaultEdge>(
+				DefaultWeightedEdge.class);
 		RandomGraphGenerator<Vertex, DefaultEdge> randomGenerator = new RandomGraphGenerator<Vertex, DefaultEdge>(
 				countVertex, countEdges);
 		VertexFactory<Vertex> vertexFactory = new VertexFactory<Vertex>() {
@@ -88,10 +88,10 @@ public class GraphCreator {
 		};
 		randomGenerator.generateGraph(graph, vertexFactory, null);
 		for (DefaultEdge edge : graph.edgeSet()) {
-			int differenceValue = 0;
-			differenceValue = (int) (Math.random() * (25 - 5) + 5);
+			int value = 0;
+			value = (int) (Math.random() * (25 - 5) + 5);
 			;
-			graph.setEdgeWeight(edge, differenceValue);
+			graph.setEdgeWeight(edge, value);
 		}
 		return graph;
 	}

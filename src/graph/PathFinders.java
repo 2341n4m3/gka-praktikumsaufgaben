@@ -1,7 +1,6 @@
 package graph;
 
 import graph.functions.BreadthFirstIteratorFactory;
-import graph.functions.DijkstraFinder;
 import graph.functions.DirectedNeighbors;
 import graph.functions.UndirectedNeighbors;
 import graph.functions.NeighborChecker;
@@ -11,7 +10,6 @@ import graph.functions.EdgeListFactory;
 import graph.functions.GraphPathFactory;
 
 import org.jgrapht.DirectedGraph;
-import org.jgrapht.Graph;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.event.TraversalListener;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
@@ -115,11 +113,6 @@ public class PathFinders {
 				iteratorFactory, neighbors);
 	}
 
-
-	public static <V, E> DijkstraFinder<Graph<V, E>, V, E> newDijkstraPathFinder(
-			TraversalListener<V, E> listener) {
-		return new DijkstraFinder<>(listener);
-	}
 
 
 
