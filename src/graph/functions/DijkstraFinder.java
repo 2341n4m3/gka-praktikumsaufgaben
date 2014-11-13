@@ -2,9 +2,11 @@ package graph.functions;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.Graph;
@@ -13,11 +15,6 @@ import org.jgrapht.event.TraversalListener;
 import org.jgrapht.graph.GraphPathImpl;
 
 /**
- * 
- * @author
- * 
- * @param <G>
- *            der Typ des Graph
  * @param <V>
  *            der Typ der Vertexe
  * @param <E>
@@ -31,6 +28,9 @@ public class DijkstraFinder<V, E> {
 	 */
 	private final TraversalListener<V, E> listener;
     private Graph<V, E> graph;
+	Map<V,Double> toProcess = new HashMap<V, Double>();
+	Map<V, Double> distances = new HashMap<V, Double>();
+	Map<V, V> predecessor = new HashMap<V, V>();
 
 	public DijkstraFinder(Graph<V, E> graph,TraversalListener<V, E> listener) {
 		this.graph = graph;
@@ -60,14 +60,13 @@ public class DijkstraFinder<V, E> {
 					"start and end should not be equal");
 		}
 
-		List<V> toProcess = new ArrayList<V>();
-		Map<V, Double> distances = new HashMap<V, Double>();
-		Map<V, V> predecessor = new HashMap<V, V>();
 
+		System.out.println(graph.vertexSet());
 		// Initialisierung der "Tabelle"
 		for (V vertex : graph.vertexSet()) {
 			listener.vertexTraversed(null);
-			toProcess.add(vertex);
+			toProcess.put(vertex, start.equals(vertex) ? 0.0
+					: Double.POSITIVE_INFINITY);
 			distances.put(vertex, start.equals(vertex) ? 0.0
 					: Double.POSITIVE_INFINITY);
 			predecessor.put(vertex, start.equals(vertex) ? vertex : null);
@@ -76,15 +75,11 @@ public class DijkstraFinder<V, E> {
 		V index = start;
 		while (!toProcess.isEmpty()) {
 
-			// kleinsten holen
-			double smallDist = Double.POSITIVE_INFINITY;
-			// index sagt aus welche Vertex den kleinsten gewicht zum vorherigen
-			// vertex hat.
-			V currentVertex = toProcess.get(toProcess.indexOf(index));
+			// Index sagt aus welcher Knoten das kleinste Gewicht der noch nicht abgearbeiteten Knoten hat.
+			V currentVertex = index;
 			double currentDistance = distances.get(currentVertex);
 
-			// alle Kanten durchgehen und die Kanten raussuchen für
-			// ungerichteten Graph
+			// alle Kanten durchgehen und die Nachbarkanten raussuchen
 			for (E edge : graph.edgeSet()) {
 
 				listener.edgeTraversed(null);
@@ -93,22 +88,13 @@ public class DijkstraFinder<V, E> {
 					if (graph.getEdgeSource(edge).equals(currentVertex)) {
 						double targetDistance = currentDistance
 								+ graph.getEdgeWeight(edge);
+						listener.vertexTraversed(null);
 						V targetVertex = graph.getEdgeTarget(edge);
 
 
-						// kante mit dem niedrigsten wert merken im jetzigen
-						// durchlauf
-						// falls die karte aber schon "besucht" war, dann nicht
-						// mitzählen
-						if (targetDistance < smallDist
-								&& toProcess.contains(targetVertex)) {
-							index = targetVertex;
-							smallDist = targetDistance;
-						}
-
-						// neue Distanz speichern, falls die gespeicherte
-						// Distanz größer war
+						// Neue Distanz und Vorgänger speichern, falls sie kleiner als die gespeicherte ist
 						if (distances.get(targetVertex) > targetDistance) {
+							toProcess.put(targetVertex, targetDistance);
 							distances.put(targetVertex, targetDistance);
 							predecessor.put(targetVertex, currentVertex);
 						}
@@ -119,24 +105,17 @@ public class DijkstraFinder<V, E> {
 							|| graph.getEdgeTarget(edge).equals(currentVertex)) {
 						double targetDistance = currentDistance
 								+ graph.getEdgeWeight(edge);
+						listener.vertexTraversed(null);
 						V targetVertex = graph.getEdgeTarget(edge);
 
 						if (targetVertex.equals(currentVertex))
 							targetVertex = graph.getEdgeSource(edge);
 
-						// kante mit dem niedrigsten wert merken im jetzigen
-						// durchlauf
-						// falls die kante aber schon "besucht" war, dann nicht
-						// mitzählen
-						if (targetDistance < smallDist
-								&& toProcess.contains(targetVertex)) {
-							index = targetVertex;
-							smallDist = targetDistance;
-						}
 
-						// neue Distanz speichern, falls die gespeicherte
-						// Distanz größer war
+
+						// Neue Distanz und Vorgänger speichern, falls sie kleiner als die gespeicherte ist
 						if (distances.get(targetVertex) > targetDistance) {
+							toProcess.put(targetVertex, targetDistance);
 							distances.put(targetVertex, targetDistance);
 							predecessor.put(targetVertex, currentVertex);
 						}
@@ -144,14 +123,21 @@ public class DijkstraFinder<V, E> {
 					}
 				}
 			}
-
 			// "Knoten als bearbeitet markieren"
 			toProcess.remove(currentVertex);
 
-			// falls keiner weitere nachbarn übrig ist
-			// neuen nächsten knoten auswählen.
-			if (index.equals(currentVertex) && !toProcess.isEmpty())
-				index = toProcess.get(0);
+			// neuen Knoten mit kleinstem Gewicht in den noch nicht abgearbeiteten Knoten aussuchen
+				index = Collections.min(toProcess.entrySet(),new Comparator<Map.Entry<V,Double>>() {
+
+			        @Override
+			        public int compare(Entry<V, Double> o1, Entry<V, Double> o2) {
+			        	if(o1.getValue() < o2.getValue()) return -1;
+			        	else if(o1.getValue() > o2.getValue()) return 1;
+			        	else return 0;
+			        }}).getKey();
+
+				// wenn Endknoten markiert wurde Algorithmus beenden
+			if(index.equals(end)) toProcess.clear();
 		}
 
 		// Pfad bauen
@@ -160,7 +146,6 @@ public class DijkstraFinder<V, E> {
 		double weight = 0;
 		List<E> path = new ArrayList<E>();
 
-		// predecessor.get(currentVertex);
 		// falls ziel knoten nie erreicht wurde
 		// wird eine leere liste zurück gegeben.
 		if (predecessor.get(currentVertex) != null) {
@@ -168,6 +153,7 @@ public class DijkstraFinder<V, E> {
 					&& !nextCurrentVertex.equals(start)) {
 				currentVertex = nextCurrentVertex;
 				nextCurrentVertex = predecessor.get(currentVertex);
+				listener.edgeTraversed(null);
 				path.add(graph.getEdge(nextCurrentVertex, currentVertex));
 			}
 

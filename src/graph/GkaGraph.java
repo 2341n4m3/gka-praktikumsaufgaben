@@ -23,7 +23,7 @@ import static graph.GkaGraphReaders.*;
 import static graph.GraphViz.vizIt;
 import graph.GraphType;
 
-public class GkaGraphAPI {
+public class GkaGraph {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) throws Exception {
 		while (true) {

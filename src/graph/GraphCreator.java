@@ -89,7 +89,7 @@ public class GraphCreator {
 		randomGenerator.generateGraph(graph, vertexFactory, null);
 		for (DefaultEdge edge : graph.edgeSet()) {
 			int value = 0;
-			value = (int) (Math.random() * (25 - 5) + 5);
+			value = (int) (Math.random() * 100);
 			;
 			graph.setEdgeWeight(edge, value);
 		}

@@ -39,15 +39,10 @@ public class FloydFinder<V, E>
 
 
     /**
-     * Calculates the matrix of all shortest paths, but does not populate the
-     * paths map.
+     * Calculates the matrix of all shortest paths
      */
     private void lazyCalculateMatrix()
     {
-        if (d != null) {
-            // already done
-            return;
-        }
 
         int n = vertices.size();
 
@@ -57,18 +52,18 @@ public class FloydFinder<V, E>
             Arrays.fill(backtrace[i], -1);
         }
 
-        // initialize matrix, 0
+        // initialize matrix, every two vertices without an edge
         d = new double[n][n];
         for (int i = 0; i < n; i++) {
             Arrays.fill(d[i], Double.POSITIVE_INFINITY);
         }
 
-        // initialize matrix, 1
+        // initialize matrix, showing on themselves
         for (int i = 0; i < n; i++) {
             d[i][i] = 0.0;
         }
 
-        // initialize matrix, 2
+        // initialize matrix, setting up all the distances between two vertices with an edge
         Set<E> edges = graph.edgeSet();
 
         for (E edge : edges) {
@@ -87,7 +82,7 @@ public class FloydFinder<V, E>
             }
         }
 
-        // run fw alg
+        // Floyd Warshall Algorithm
         for (int j = 0; j < n; j++) {
             for (int i = 0; i < n; i++) {
                 for (int k = 0; k < n; k++) {
@@ -106,6 +101,7 @@ public class FloydFinder<V, E>
     {
         int k = backtrace[v_a][v_b];
         if (k == -1) {
+        	listener.edgeTraversed(null);
             E edge = graph.getEdge(vertices.get(v_a), vertices.get(v_b));
             if (edge != null) {
                 edges.add(edge);
@@ -118,8 +114,7 @@ public class FloydFinder<V, E>
 
     /**
      * Get the shortest path between two vertices. Note: The paths are
-     * calculated using a recursive algorithm. It *will* give problems on paths
-     * longer than the stack allows.
+     * calculated using a recursive algorithm. stack might be a problem
      *
      * @param a From vertice
      * @param b To vertice
@@ -128,6 +123,17 @@ public class FloydFinder<V, E>
      */
     public GraphPath<V, E> getShortestPath(V a, V b)
     {
+    	
+		if (!(graph.containsVertex(a) && graph.containsVertex(b))) {
+			throw new IllegalArgumentException(
+					"start or end ist not contain im graph");
+		}
+
+		if (a.equals(b)) {
+			throw new IllegalArgumentException(
+					"start and end should not be equal");
+		}
+    	
     	lazyCalculateMatrix();
         int v_a = vertices.indexOf(a);
         int v_b = vertices.indexOf(b);
