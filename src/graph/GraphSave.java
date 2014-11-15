@@ -12,7 +12,7 @@ import graph.Vertex;
 
 public class GraphSave {
 	
-	public static void GraphWriter(Graph<Vertex,DefaultEdge> graph, GraphType type, File datei){
+	public static void graphWriter(Graph<Vertex,DefaultEdge> graph, GraphType type, File datei){
 		FileWriter writer;
 		try {
 			writer = new FileWriter(datei ,true);

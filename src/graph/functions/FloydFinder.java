@@ -18,16 +18,12 @@ public class FloydFinder<V, E>
     private int [][] backtrace = null;
     private TraversalListener<V,E> listener;
 
-    
-
     public FloydFinder(Graph<V, E> graph,TraversalListener<V,E> listener)
     {
         this.graph = graph;
         this.listener = listener;
         this.vertices = new ArrayList<V>(graph.vertexSet());
     }
-
-    
 
     /**
      * @return the graph on which this algorithm operates
@@ -37,13 +33,11 @@ public class FloydFinder<V, E>
         return graph;
     }
 
-
     /**
      * Calculates the matrix of all shortest paths
      */
     private void lazyCalculateMatrix()
     {
-
         int n = vertices.size();
 
         // init the backtrace matrix
@@ -147,7 +141,7 @@ public class FloydFinder<V, E>
             return null;
         }
 
-        double weight = 0.;
+        double weight = 0.0;
         for (E e : edges) {
             weight += graph.getEdgeWeight(e);
         }

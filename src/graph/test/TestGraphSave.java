@@ -27,7 +27,7 @@ public class TestGraphSave {
 		int edgeAmount = 5;
 		WeightedGraph<Vertex, DefaultEdge> g1 = GraphCreator.buildGraph(vertexAmount, edgeAmount);
 		File datei = new File("src/graph/misc/testSave.gka");
-		GraphSave.GraphWriter(g1,GraphType.UNDIRECTEDWEIGHTEDGRAPH, datei);
+		GraphSave.graphWriter(g1,GraphType.UNDIRECTEDWEIGHTEDGRAPH, datei);
 		
 		GkaGraphReader<WeightedPseudograph<Vertex, DefaultWeightedEdge>> reader =
 				newUndirectedWeightedReader();

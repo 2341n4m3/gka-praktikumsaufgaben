@@ -53,13 +53,13 @@ public class GraphCreator {
 		graph=buildGraph(countVertex, countEdges);
 		sc.close();
 		switch (typestr) {
-		case 1: GraphSave.GraphWriter(graph, GraphType.DIRECTEDWEIGHTEDGRAPH, datei);
+		case 1: GraphSave.graphWriter(graph, GraphType.DIRECTEDWEIGHTEDGRAPH, datei);
 			break;
-		case 2: GraphSave.GraphWriter(graph, GraphType.UNDIRECTEDWEIGHTEDGRAPH, datei);
+		case 2: GraphSave.graphWriter(graph, GraphType.UNDIRECTEDWEIGHTEDGRAPH, datei);
 			break;
-		case 3: GraphSave.GraphWriter(graph, GraphType.DIRECTEDGRAPH, datei);
+		case 3: GraphSave.graphWriter(graph, GraphType.DIRECTEDGRAPH, datei);
 			break;
-		case 4: GraphSave.GraphWriter(graph, GraphType.UNDIRECTEDGRAPH, datei);
+		case 4: GraphSave.graphWriter(graph, GraphType.UNDIRECTEDGRAPH, datei);
 		default: throw new Exception("unsupported GraphType");
 		}
 		System.out.println("Datei Beschrieben");

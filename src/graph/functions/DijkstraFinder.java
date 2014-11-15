@@ -27,12 +27,12 @@ public class DijkstraFinder<V, E> {
 	 * einem GraphIterator emitiert werden
 	 */
 	private final TraversalListener<V, E> listener;
-    private Graph<V, E> graph;
-	Map<V,Double> toProcess = new HashMap<V, Double>();
+	private Graph<V, E> graph;
+	Map<V, Double> toProcess = new HashMap<V, Double>();
 	Map<V, Double> distances = new HashMap<V, Double>();
 	Map<V, V> predecessor = new HashMap<V, V>();
 
-	public DijkstraFinder(Graph<V, E> graph,TraversalListener<V, E> listener) {
+	public DijkstraFinder(Graph<V, E> graph, TraversalListener<V, E> listener) {
 		this.graph = graph;
 		this.listener = listener;
 	}
@@ -60,7 +60,6 @@ public class DijkstraFinder<V, E> {
 					"start and end should not be equal");
 		}
 
-
 		// Initialisierung der "Tabelle"
 		for (V vertex : graph.vertexSet()) {
 			listener.vertexTraversed(null);
@@ -74,7 +73,8 @@ public class DijkstraFinder<V, E> {
 		V index = start;
 		while (!toProcess.isEmpty()) {
 
-			// Index sagt aus welcher Knoten das kleinste Gewicht der noch nicht abgearbeiteten Knoten hat.
+			// Index sagt aus welcher Knoten das kleinste Gewicht der noch nicht
+			// abgearbeiteten Knoten hat.
 			V currentVertex = index;
 			double currentDistance = distances.get(currentVertex);
 
@@ -90,13 +90,8 @@ public class DijkstraFinder<V, E> {
 						listener.vertexTraversed(null);
 						V targetVertex = graph.getEdgeTarget(edge);
 
-
-						// Neue Distanz und Vorgänger speichern, falls sie kleiner als die gespeicherte ist
-						if (distances.get(targetVertex) > targetDistance) {
-							toProcess.put(targetVertex, targetDistance);
-							distances.put(targetVertex, targetDistance);
-							predecessor.put(targetVertex, currentVertex);
-						}
+						changeDistance(currentVertex, targetVertex,
+								targetDistance);
 
 					}
 				} else {
@@ -110,35 +105,50 @@ public class DijkstraFinder<V, E> {
 						if (targetVertex.equals(currentVertex))
 							targetVertex = graph.getEdgeSource(edge);
 
-
-
-						// Neue Distanz und Vorgänger speichern, falls sie kleiner als die gespeicherte ist
-						if (distances.get(targetVertex) > targetDistance) {
-							toProcess.put(targetVertex, targetDistance);
-							distances.put(targetVertex, targetDistance);
-							predecessor.put(targetVertex, currentVertex);
-						}
-
+						changeDistance(currentVertex, targetVertex,
+								targetDistance);
 					}
 				}
 			}
 			// "Knoten als bearbeitet markieren"
 			toProcess.remove(currentVertex);
 
-			// neuen Knoten mit kleinstem Gewicht in den noch nicht abgearbeiteten Knoten aussuchen
-				index = Collections.min(toProcess.entrySet(),new Comparator<Map.Entry<V,Double>>() {
+			// neuen Knoten mit kleinstem Gewicht in den noch nicht
+			// abgearbeiteten Knoten aussuchen
+			index = Collections.min(toProcess.entrySet(),
+					new Comparator<Map.Entry<V, Double>>() {
 
-			        @Override
-			        public int compare(Entry<V, Double> o1, Entry<V, Double> o2) {
-			        	if(o1.getValue() < o2.getValue()) return -1;
-			        	else if(o1.getValue() > o2.getValue()) return 1;
-			        	else return 0;
-			        }}).getKey();
+						@Override
+						public int compare(Entry<V, Double> o1,
+								Entry<V, Double> o2) {
+							if (o1.getValue() < o2.getValue())
+								return -1;
+							else if (o1.getValue() > o2.getValue())
+								return 1;
+							else
+								return 0;
+						}
+					}).getKey();
 
-				// wenn Endknoten markiert wurde Algorithmus beenden
-			if(index.equals(end)) toProcess.clear();
+			// wenn Endknoten markiert wurde Algorithmus beenden
+			if (index.equals(end))
+				toProcess.clear();
 		}
+		return buildPath(start, end);
+	}
 
+	private void changeDistance(V currentVertex, V targetVertex,
+			double targetDistance) {
+		// Neue Distanz und Vorgänger speichern, falls sie kleiner als die
+		// gespeicherte ist
+		if (distances.get(targetVertex) > targetDistance) {
+			toProcess.put(targetVertex, targetDistance);
+			distances.put(targetVertex, targetDistance);
+			predecessor.put(targetVertex, currentVertex);
+		}
+	}
+
+	private GraphPath<V, E> buildPath(V start, V end) {
 		// Pfad bauen
 		V nextCurrentVertex = end;
 		V currentVertex = nextCurrentVertex;
