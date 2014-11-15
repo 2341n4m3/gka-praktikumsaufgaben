@@ -90,6 +90,7 @@ public class FloydFinder<V, E>
                     if (ij_jk < d[i][k]) {
                         d[i][k] = ij_jk;
                         backtrace[i][k] = j;
+                        if(d[i][i] < 0) throw new IllegalArgumentException("The Graph has a negative cycle so that the Algorithm can't calculate the path correctly");
                     }
                 }
             }

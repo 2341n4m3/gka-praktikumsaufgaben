@@ -61,7 +61,6 @@ public class DijkstraFinder<V, E> {
 		}
 
 
-		System.out.println(graph.vertexSet());
 		// Initialisierung der "Tabelle"
 		for (V vertex : graph.vertexSet()) {
 			listener.vertexTraversed(null);

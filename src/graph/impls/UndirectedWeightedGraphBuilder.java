@@ -32,13 +32,15 @@ public class UndirectedWeightedGraphBuilder
 		DefaultWeightedEdge addedEdge = null;
 		// je nach Elementanzahl werden die bestimmten Elemente verschieden
 		// interpretiert und ein Graph erzeugt
-		if (vertices.length == 3) {
+		if (vertices.length >=2) {
 			Vertex source = makeVertexFrom(vertices[0]);
 			Vertex target = makeVertexFrom(vertices[1]);
 			graph.addVertex(source);
 			graph.addVertex(target);
 			addedEdge = graph.addEdge(source, target);
-			graph.setEdgeWeight(addedEdge, Double.parseDouble(vertices[2]));
+			if(vertices.length>2){
+				graph.setEdgeWeight(addedEdge, Double.parseDouble(vertices[2]));
+				}
 			return true;
 		} else if (vertices.length == 2) {
 			Vertex source = makeVertexFrom(vertices[0]);
