@@ -22,14 +22,16 @@ import org.jgrapht.graph.GraphPathImpl;
  */
 public class DijkstraFinder<V, E> {
 
-	/**
-	 * listener ist ein TraversalListener der nach den Events horcht die von
-	 * einem GraphIterator emitiert werden
-	 */
+	 // listener ist ein TraversalListener der nach den Events horcht die von
+	 // einem GraphIterator emitiert werden
 	private final TraversalListener<V, E> listener;
+	
 	private Graph<V, E> graph;
+	//die noch nicht markierten Knoten
 	Map<V, Double> toProcess = new HashMap<V, Double>();
+	//die jeweiligen Distanzen der Knoten zum Startknoten
 	Map<V, Double> distances = new HashMap<V, Double>();
+	//die VorgängerKnoten der jeweiligen Knoten auf dem kürzesten Rückweg zum Startknoten
 	Map<V, V> predecessor = new HashMap<V, V>();
 
 	public DijkstraFinder(Graph<V, E> graph, TraversalListener<V, E> listener) {

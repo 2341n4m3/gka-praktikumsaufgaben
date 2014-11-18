@@ -15,7 +15,7 @@ public class FloydFinder<V, E>
     private List<V> vertices;
 
     private double [][] d = null;
-    private int [][] backtrace = null;
+    private int [][] b = null;
     private TraversalListener<V,E> listener;
 
     public FloydFinder(Graph<V, E> graph,TraversalListener<V,E> listener)
@@ -34,16 +34,16 @@ public class FloydFinder<V, E>
     }
 
     /**
-     * Calculates the matrix of all shortest paths
+     * Initializes and calculates the matrix
      */
     private void lazyCalculateMatrix()
     {
         int n = vertices.size();
 
-        // init the backtrace matrix
-        backtrace = new int[n][n];
+        // initialize the backtrace matrix
+        b = new int[n][n];
         for (int i = 0; i < n; i++) {
-            Arrays.fill(backtrace[i], -1);
+            Arrays.fill(b[i], -1);
         }
 
         // initialize matrix, every two vertices without an edge
@@ -83,7 +83,7 @@ public class FloydFinder<V, E>
                     double ij_jk = d[i][j] + d[j][k];
                     if (ij_jk < d[i][k]) {
                         d[i][k] = ij_jk;
-                        backtrace[i][k] = j;
+                        b[i][k] = j;
                         if(d[i][i] < 0) throw new IllegalArgumentException("The Graph has a negative cycle so that the Algorithm can't calculate the path correctly");
                     }
                 }
@@ -94,7 +94,10 @@ public class FloydFinder<V, E>
   
     private void shortestPathRecur(List<E> edges, int v_a, int v_b)
     {
-        int k = backtrace[v_a][v_b];
+        int k = b[v_a][v_b];
+        
+        //if there is not another vertex between those two in the path add the edge 
+        //to the path otherwise search the two paths with vertex k in between
         if (k == -1) {
         	listener.edgeTraversed(null);
             E edge = graph.getEdge(vertices.get(v_a), vertices.get(v_b));
@@ -108,9 +111,7 @@ public class FloydFinder<V, E>
     }
 
     /**
-     * Get the shortest path between two vertices. Note: The paths are
-     * calculated using a recursive algorithm. stack might be a problem
-     *
+     * Get the shortest path between two vertices. 
      * @param a From vertice
      * @param b To vertice
      *
@@ -133,6 +134,7 @@ public class FloydFinder<V, E>
         int v_a = vertices.indexOf(a);
         int v_b = vertices.indexOf(b);
 
+        //recursively build path
         List<E> edges = new ArrayList<E>();
         shortestPathRecur(edges, v_a, v_b);
 
@@ -141,6 +143,7 @@ public class FloydFinder<V, E>
             return null;
         }
 
+        //add up paths weight
         double weight = 0.0;
         for (E e : edges) {
             weight += graph.getEdgeWeight(e);
