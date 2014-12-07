@@ -27,8 +27,7 @@ public class TestFordVsEdmond {
 							"src/graph/misc/graph4directed.gka");
 			big_graph =newDirectedWeightedReader().read(
 					"src/graph/misc/BigNet_3_DiGr_50_0.gka");
-			test = newDirectedWeightedReader().read(
-					"src/graph/misc/BigNet_3_DiGr_800_1.gka");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -42,17 +41,16 @@ public class TestFordVsEdmond {
 		System.out.println("River: "+fordFinder.getRiver());
 		System.out.println("River: "+edmondFinder.getRiver());
 		flowFordAndEdmond(big_graph);
-		//flowFordAndEdmond(test);
 		
-		for(int i = 0; i<10;i++){
-			flowFordAndEdmond(newDirectedWeightedReader().read(
-					"src/graph/misc/BigNet_3_DiGr_800_"+i+".gka"));
-		}
-		
-		for(int i = 0; i<10;i++){
-			flowFordAndEdmond(newDirectedWeightedReader().read(
-					"src/graph/misc/BigNet_3_DiGr_2500_"+i+".gka"));
-		}
+//		for(int i = 0; i<5;i++){
+//			flowFordAndEdmond(newDirectedWeightedReader().read(
+//					"src/graph/misc/BigNet_3_DiGr_800_"+i+".gka"));
+//		}
+//		
+//		for(int i = 0; i<5;i++){
+//			flowFordAndEdmond(newDirectedWeightedReader().read(
+//					"src/graph/misc/BigNet_3_DiGr_2500_"+i+".gka"));
+//		}
 		
 
 		

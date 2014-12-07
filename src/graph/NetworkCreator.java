@@ -56,7 +56,6 @@ public class NetworkCreator {
 				ok = false;
 			}
 		
-		System.out.println("test");
 		graph=buildGraph(countVertex, countEdges);
 		graph=buildNetwork(graph);
 		sc.close();
@@ -91,7 +90,7 @@ public class NetworkCreator {
 		randomGenerator.generateGraph(graph, vertexFactory, null);
 		for (DefaultEdge edge : graph.edgeSet()) {
 			int value = 0;
-			value = (int) (Math.random() * 100);
+			value = (int) ((Math.random()+1) * 100);
 			;
 			graph.setEdgeWeight(edge, value);
 		}
@@ -108,11 +107,11 @@ public class NetworkCreator {
 		if(vertex.equals(q) || vertex.equals(s)) continue;
 		if(Math.random() <0.2){ 
 			DefaultEdge edge = graph.addEdge(q, vertex);
-			graph.setEdgeWeight(edge, (int) (Math.random() * 100));
+			graph.setEdgeWeight(edge, (int) ((Math.random()+1) * 100));
 		}
 		if(Math.random() <0.2){ 
 			DefaultEdge edge = graph.addEdge(vertex,s);
-			graph.setEdgeWeight(edge, (int) (Math.random() * 100));
+			graph.setEdgeWeight(edge, (int) ((Math.random()+1) * 100));
 			}
 	}
 	return graph;
